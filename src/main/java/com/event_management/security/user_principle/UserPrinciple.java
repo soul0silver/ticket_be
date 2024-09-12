@@ -25,6 +25,7 @@ public class UserPrinciple implements UserDetails {
     private String password;
     private String email;
     private String avatar;
+    private boolean system;
     private Collection<? extends GrantedAuthority> roles;
 
     public static UserPrinciple build(UserDTO userDTO) {
@@ -37,6 +38,7 @@ public class UserPrinciple implements UserDetails {
                 userDTO.getPassword(),
                 userDTO.getEmail(),
                 userDTO.getAvatar(),
+                userDTO.isSystem(),
                 authorities
         );
     }

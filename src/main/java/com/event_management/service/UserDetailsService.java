@@ -32,6 +32,7 @@ public class UserDetailsService implements org.springframework.security.core.use
                 user.getEmail(),
                 user.getPassword(),
                 user.getAvatar(),
+                user.isSystem(),
                 roles
         );
         return UserPrinciple.build(userDTO);
