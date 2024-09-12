@@ -1,6 +1,7 @@
 package com.event_management.security;
 
 import com.event_management.service.UserDetailsService;
+import com.google.firebase.auth.FirebaseAuth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,7 +36,6 @@ public class WebSecurityConfig implements WebMvcConfigurer {
     JwtEntryPoint jwtEntryPoint;
     @Autowired
     JwtTokenFilter jwtTokenFilter;
-
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {

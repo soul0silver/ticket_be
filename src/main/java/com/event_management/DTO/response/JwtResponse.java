@@ -1,4 +1,4 @@
-package com.event_management.security;
+package com.event_management.DTO.response;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,9 @@
 package com.event_management.security;
 
 import com.event_management.security.user_principle.UserPrinciple;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -29,14 +32,14 @@ public class JwtProvider {
         List<String> roles = userPrinciple.getAuthorities().stream()
                 .map(authority -> authority.getAuthority())
                 .collect(Collectors.toList());
-        //create jwt
+
         return Jwts.builder()
                 .claim("id",userPrinciple.getId().toString())
                 .setSubject(userPrinciple.getUsername())
                 .claim("roles",roles)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
-                .signWith( key(),SignatureAlgorithm.HS512)
+                .signWith(key(),SignatureAlgorithm.HS512)
                 .compact();
     }
 
@@ -71,5 +74,8 @@ public class JwtProvider {
         return false;
     }
 
+    public FirebaseToken validateFirebaseToken(String token) throws FirebaseAuthException {
+        return FirebaseAuth.getInstance().verifyIdToken(token);
+    }
 
 }

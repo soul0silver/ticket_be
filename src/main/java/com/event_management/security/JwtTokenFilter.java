@@ -1,5 +1,6 @@
 package com.event_management.security;
 
+import com.google.firebase.auth.FirebaseToken;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -31,11 +32,20 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         final String requestTokenHeader = request.getHeader("Authorization");
         String email = null;
         String jwtToken = null;
+        Boolean systemAcc = Boolean.valueOf(request.getHeader("IsSystemAcc"));
         if (request.getRequestURI().contains("/private/")) {
             if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
                 jwtToken = getJwt(request);
                 try {
-                    email = jwtProvider.getUserFromJwt(jwtToken);
+                    if (systemAcc){
+                        try {
+                            FirebaseToken firebaseToken = jwtProvider.validateFirebaseToken(jwtToken);
+                            email = firebaseToken.getEmail();
+                        } catch (Exception e) {
+                            log.error("Cannot set user authentication: {}", e.getMessage());
+                        }
+                    }
+                    else email = jwtProvider.getUserFromJwt(jwtToken);
                 } catch (IllegalArgumentException e) {
                     logger.error("Can't find token JWT");
                 } catch (ExpiredJwtException e) {
@@ -44,6 +54,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             } else {
                 logger.warn("JWT Token is not type Bearer");
             }
+
             if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
                 try {

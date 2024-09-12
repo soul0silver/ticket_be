@@ -2,13 +2,11 @@ package com.event_management.security.user_principle;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.event_management.DTO.UserDTO;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -18,6 +16,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class UserPrinciple implements UserDetails {
     private Long id;
     private String fullName;
@@ -32,15 +31,15 @@ public class UserPrinciple implements UserDetails {
         List<GrantedAuthority> authorities = userDTO.getRoles().stream()
                 .map((s) -> new SimpleGrantedAuthority(s.toString()))
                 .collect(Collectors.toList());
-        return new UserPrinciple(
-                userDTO.getId(),
-                userDTO.getFullName(),
-                userDTO.getPassword(),
-                userDTO.getEmail(),
-                userDTO.getAvatar(),
-                userDTO.isSystem(),
-                authorities
-        );
+        return UserPrinciple.builder()
+                .id(userDTO.getId())
+                .fullName(userDTO.getFullName())
+                .password(userDTO.getPassword())
+                .email(userDTO.getEmail())
+                .avatar(userDTO.getAvatar())
+                .system(userDTO.isSystem())
+                .roles(authorities)
+                .build();
     }
 
     @Override

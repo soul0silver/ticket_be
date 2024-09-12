@@ -7,7 +7,7 @@ import com.event_management.model.User;
 import com.event_management.repository.RoleRepository;
 import com.event_management.repository.UserRepository;
 import com.event_management.security.JwtProvider;
-import com.event_management.security.JwtResponse;
+import com.event_management.DTO.response.JwtResponse;
 import com.event_management.security.user_principle.UserPrinciple;
 import com.event_management.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
