@@ -23,7 +23,7 @@ public class UserDetailsService implements org.springframework.security.core.use
     private RoleRepository roleRepository;
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserPrinciple loadUserByUsername(String email) throws UsernameNotFoundException {
         User user= userRepository.findByEmail(email);
         List<String> roles= roleRepository.findRoleByUsersId(user.getId()).stream().map(Role::getName).collect(Collectors.toList());
         UserDTO userDTO=new UserDTO(

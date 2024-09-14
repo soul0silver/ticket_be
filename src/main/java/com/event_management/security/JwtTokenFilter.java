@@ -1,5 +1,6 @@
 package com.event_management.security;
 
+import com.event_management.security.user_principle.UserPrinciple;
 import com.google.firebase.auth.FirebaseToken;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
@@ -33,7 +34,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         String email = null;
         String jwtToken = null;
         Boolean systemAcc = Boolean.valueOf(request.getHeader("IsSystemAcc"));
-        if (request.getRequestURI().contains("/private/") || request.getRequestURI().contains("/login-google")) {
+        if (!request.getRequestURI().contains("/login") || request.getRequestURI().contains("/login-google")) {
             if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
                 jwtToken = getJwt(request);
                 try {
@@ -55,8 +56,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 logger.warn("JWT Token is not type Bearer");
             }
 
-            if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
+            if (email != null ) {
+                UserPrinciple userDetails = (UserPrinciple) userDetailsService.loadUserByUsername(email);
                 try {
                     if (jwtProvider.validateToken(jwtToken)) {
                         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(

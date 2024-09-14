@@ -13,7 +13,7 @@ import java.util.Set;
 @Table(name = "roles")
 public class Role {
     @Id
-    private Long id;
+    private int id;
     private String name;
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
