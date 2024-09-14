@@ -23,9 +23,9 @@ public class User {
     private String fullName;
     private String email;
     private String password;
-    private String phone;
     private boolean active = true;
     private String avatar;
+    @Column(name = "is_system")
     private boolean system;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(

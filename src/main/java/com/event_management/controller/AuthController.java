@@ -1,5 +1,6 @@
 package com.event_management.controller;
 
+import com.event_management.DTO.request.GoogleSignInReq;
 import com.event_management.DTO.request.LoginReq;
 import com.event_management.DTO.request.RegisterReqDto;
 import com.event_management.service.AuthService;
@@ -35,8 +36,10 @@ public class AuthController {
             return ResponseEntity.ok(authService.login(loginForm));
 
     }
-
-
+    @PostMapping("/login-google")
+    public ResponseEntity<?> loginGoogle(@RequestBody GoogleSignInReq googleSignInReq) {
+        return ResponseEntity.ok(authService.loginWithGoogle(googleSignInReq));
+    }
 
 
 }

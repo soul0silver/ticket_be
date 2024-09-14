@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalException {
     @ExceptionHandler(Exception.class)
     ResponseEntity<?> handleException(Exception ex){
-        return ResponseEntity.internalServerError().build();
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
     @ExceptionHandler({BusinessException.class})

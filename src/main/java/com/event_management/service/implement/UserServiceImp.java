@@ -31,14 +31,13 @@ public class UserServiceImp implements UserService {
         if (userRepository.existsByEmail(registerReqDto.getEmail())){
             throw new BusinessException("Email is already exist");
         }
-        if (userRepository.existsByPhone(registerReqDto.getPhone())){
-            throw new BusinessException("Phone number is already exist");
-        }
+
         User user = new User();
         user.setEmail(registerReqDto.getEmail());
         user.setPassword(encoder.encode(registerReqDto.getPassword()));
         user.setFullName(registerReqDto.getFullName());
-        user.setActive(true);
+        user.setAvatar(registerReqDto.getAvatar());
+        user.setSystem(true);
         Set<Role> roles = roleRepository.findRoleByName(RoleName.GUEST.getName());
         user.setRoles(roles);
         return userRepository.save(user).getId();
