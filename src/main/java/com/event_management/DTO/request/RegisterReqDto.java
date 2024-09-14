@@ -16,7 +16,7 @@ public class RegisterReqDto {
     @NotBlank
     private String password;
     @NotBlank
-    private String phone;
+    private String avatar;
     @NotBlank
     private String fullName;
 }

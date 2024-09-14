@@ -54,8 +54,7 @@ public class AuthServiceImpl implements AuthService {
         }
         Authentication authentication =  new UsernamePasswordAuthenticationToken(reqDto.getEmail(), null);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtProvider.generateToken(authentication);
         UserPrinciple userPrincipal = (UserPrinciple) authentication.getPrincipal();
-        return new JwtResponse(userPrincipal.getId(), userPrincipal.getUsername(),userPrincipal.getAvatar(), token ,userPrincipal.getAuthorities());
+        return new JwtResponse(userPrincipal.getId(), userPrincipal.getUsername(),userPrincipal.getAvatar(), null ,userPrincipal.getAuthorities());
     }
 }

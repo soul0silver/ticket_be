@@ -33,11 +33,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         String email = null;
         String jwtToken = null;
         Boolean systemAcc = Boolean.valueOf(request.getHeader("IsSystemAcc"));
-        if (request.getRequestURI().contains("/private/")) {
+        if (request.getRequestURI().contains("/private/") || request.getRequestURI().contains("/login-google")) {
             if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
                 jwtToken = getJwt(request);
                 try {
-                    if (systemAcc){
+                    if (!systemAcc){
                         try {
                             FirebaseToken firebaseToken = jwtProvider.validateFirebaseToken(jwtToken);
                             email = firebaseToken.getEmail();
