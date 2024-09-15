@@ -28,4 +28,5 @@ public class Ticket {
     private Integer quantity;
     @Column(name = "create_at")
     private LocalDateTime createAt;
+    private  boolean paid= false;
 }
