@@ -7,6 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,4 +26,6 @@ public class Ticket {
     private String name;
     private String email;
     private Integer quantity;
+    @Column(name = "create_at")
+    private LocalDateTime createAt;
 }

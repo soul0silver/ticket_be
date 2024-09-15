@@ -37,14 +37,19 @@ public class EventController {
     }
 
     @PutMapping("/{id}")
-    public Event edit(@PathVariable("id") Long id, Event event) {
+    public Event edit(@PathVariable("id") Long id,@RequestBody Event event) {
         var eventOld = eventRepository.findById(id).orElseThrow(RuntimeException::new);
-        BeanUtils.copyProperties(eventOld, event);
+        event.setId(id);
         return eventRepository.save(event);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Long id) {
         eventRepository.deleteById(id);
+    }
+
+    @GetMapping("/rank")
+    Object rank(){
+        return eventRepository.getRank();
     }
 }

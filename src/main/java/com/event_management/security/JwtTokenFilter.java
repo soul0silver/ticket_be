@@ -34,7 +34,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         String email = null;
         String jwtToken = null;
         Boolean systemAcc = Boolean.valueOf(request.getHeader("IsSystemAcc"));
-        if (!request.getRequestURI().contains("/login") || request.getRequestURI().contains("/login-google")) {
+        if (!request.getRequestURI().contains("/login") || !request.getRequestURI().contains("/pay")) {
             if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
                 jwtToken = getJwt(request);
                 try {

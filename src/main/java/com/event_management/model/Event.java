@@ -28,5 +28,6 @@ public class Event {
     private String tag;
     private long uid;
     private BigDecimal price;
-
+    @Column(name = "del")
+    private boolean delete;
 }

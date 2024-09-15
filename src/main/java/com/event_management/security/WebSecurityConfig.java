@@ -76,7 +76,7 @@ public class WebSecurityConfig implements WebMvcConfigurer {
                                 new AntPathRequestMatcher("/ws")
                                 ).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/sv1/user/**")).hasAnyAuthority("ADMIN")
-                        .requestMatchers(new AntPathRequestMatcher("/events/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
                         .anyRequest().permitAll())
                 .formLogin(form->form.disable())
                 .exceptionHandling(ex->ex.authenticationEntryPoint(jwtEntryPoint));
